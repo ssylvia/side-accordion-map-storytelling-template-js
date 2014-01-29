@@ -36,6 +36,8 @@ define(["esri/map",
 			$(".loader").fadeIn();
 		});
 
+		_fadeLayer = "2000";
+
 		function init()
 		{
 			app = {
@@ -314,6 +316,133 @@ define(["esri/map",
 				$("#side-pane").stop(true,true).slideUp();
 				$("#legend-pane").stop(true,true).slideUp();
 			});
+
+			$(".item-selector").click(function(){
+				var pos = $(this).position().left;
+				if($(this).index() > 0){
+					pos = pos + 40;
+				}
+				if($(this).index() === 0){
+					_fadeLayer = "2000"
+				}
+				else if ($(this).index() === 1){
+					_fadeLayer = "shale"
+				}
+				else{
+					_fadeLayer = "change"
+				}
+				$("#item-runner").animate({
+					"left": pos
+				},200);
+
+				var layers = [];
+				dojo.forEach(app.maps,function(map){
+					var lyr = getLayerByName(map,_fadeLayer,true,false);
+					console.log(lyr);
+					layers.concat(lyr);
+					console.log(layers);
+				});
+
+				fadeLayers(layers);
+			});
+
+		}
+
+		function fadeLayers(layers)
+		{
+			dojo.forEach(app.maps,function(map){
+				dojo.forEach(getLayerByName(map,"Smithsonian",true,false),function(lyr){
+
+					lyr.fading = false;
+					if ($.inArray(lyr,layers) !== -1) {
+						setTimeout(function() {
+							lyr.fading = true;
+							fadeLayerIn(map,lyr);
+						}, 11);
+					}
+					else{
+						setTimeout(function() {
+							lyr.fading = true;
+							fadeLayerOut(map,lyr);
+						}, 11);
+					}
+
+				});
+			});
+		}
+
+		function fadeLayerIn(mapVariable,layer)
+		{
+			if(!layer.visible){
+				layer.show();
+			}
+			if(layer.opacity < 1 && layer.fading === true){
+				layer.setOpacity(layer.opacity + 0.1);
+				setTimeout(function() {
+					fadeLayerIn(mapVariable,layer);
+				}, 20);
+			}
+			else{
+				layer.setOpacity(1);
+				layer.fading = false;
+			}
+		}
+
+		function fadeLayerOut(mapVariable,layer)
+		{
+			if(layer.opacity > 0 && layer.fading === true){
+				layer.setOpacity(layer.opacity - 0.1);
+				setTimeout(function() {
+					fadeLayerOut(mapVariable,layer);
+				}, 20);
+			}
+			else{
+				layer.setOpacity(0);
+				layer.hide();
+				layer.fading = false;
+			}
+		}
+
+		function getLayerByName(mapVariable,layerName,searchMainLayers,searchGraphicsLayers)
+		{
+			var layers = [];
+
+			if($.isArray(layerName)){
+				dojo.forEach(layerName,function(lyrName){
+					if(searchMainLayers !== false){
+						dojo.forEach(mapVariable.layerIds,function(lyr){
+							if(lyr.toLowerCase().search(lyrName.toLowerCase()) !== -1){
+								layers.push(mapVariable.getLayer(lyr));
+							}
+						});
+					}
+					if(searchGraphicsLayers !== false){
+						dojo.forEach(mapVariable.graphicsLayerIds,function(lyr){
+							if(lyr.toLowerCase().search(lyrName.toLowerCase()) !== -1){
+								layers.push(mapVariable.getLayer(lyr));
+							}
+						});
+					}
+				});
+			}
+			else{
+				if(searchMainLayers !== false){
+					dojo.forEach(mapVariable.layerIds,function(lyr){
+						if(lyr.toLowerCase().search(layerName.toLowerCase()) !== -1){
+							layers.push(mapVariable.getLayer(lyr));
+						}
+					});
+				}
+				if(searchGraphicsLayers !== false){
+					dojo.forEach(mapVariable.graphicsLayerIds,function(lyr){
+						if(lyr.toLowerCase().search(layerName.toLowerCase()) !== -1){
+							layers.push(mapVariable.getLayer(lyr));
+						}
+					});
+				}
+			}
+
+			return layers;
 		}
 
 		function hidePopups()
