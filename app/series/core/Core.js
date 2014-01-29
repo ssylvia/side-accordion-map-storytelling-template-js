@@ -139,10 +139,10 @@ define(["esri/map",
 					description: response.itemInfo.item.description || ""
 				}
 
-				if (response.itemInfo.itemData.widgets && response.itemInfo.itemData.widgets.timeSlider) {
-					$("#time-pane").append('<div id="slider'+app.maps.length+'" class="time-slider"></div>');
-					new TimeSlider("slider" + app.maps.length, map, response.itemInfo.itemData.widgets.timeSlider.properties,configOptions.webmaps[app.maps.length].showSingleTimeInstance);
-				}
+				// if (response.itemInfo.itemData.widgets && response.itemInfo.itemData.widgets.timeSlider) {
+				// 	$("#time-pane").append('<div id="slider'+app.maps.length+'" class="time-slider"></div>');
+				// 	new TimeSlider("slider" + app.maps.length, map, response.itemInfo.itemData.widgets.timeSlider.properties,configOptions.webmaps[app.maps.length].showSingleTimeInstance);
+				// }
 
 				app.maps.push(map);
 				updateMobileNavigation();
