@@ -7,18 +7,24 @@ define([],
 			//The web map id
 			webmaps: [
 			{
-				id: "04744b7ad124458489ea821da3129352",
+				id: "19cfb0962b804986839d030463f45a75 ",
 				title: "",
 				// If your map has time properties, choose to show a single time instance instead of the time interval saved with the web map.
 				showSingleTimeInstance: false
 			},{
-				id: "d0f1c5ae11d24c778d597f8bbddcf85f",
+				id: "08a99711ba3447eb8a4f8d8bd00566e8 ",
 				title: "",
 				// If your map has time properties, choose to show a single time instance instead of the time interval saved with the web map.
 				showSingleTimeInstance: false
 			},
 			{
-				id: "bb5a3da962ac4040b2f52f5869fddbd8",
+				id: "aefed8ea77fd48da85b7c8964e435c3a  ",
+				title: "",
+				// If your map has time properties, choose to show a single time instance instead of the time interval saved with the web map.
+				showSingleTimeInstance: false
+			},
+			{
+				id: "054485d1432e4cceb9bd948dc0479a10    ",
 				title: "",
 				// If your map has time properties, choose to show a single time instance instead of the time interval saved with the web map.
 				showSingleTimeInstance: false
@@ -41,7 +47,7 @@ define([],
 			//	}
 			],
 			//Enter a title, if no title is specified, the first webmap's title is used.
-			title: "Add a title here",
+			title: "Drought Impact Assessment",
 			//Enter a subtitle, if no subtitle is specified, the first webmap's subtitle is used.
 			subtitle: "Add a subtitle here",
 			// If false, each tab will have a number on it. If true, the first tab will not have a number and the second tab will start counting at 1.
