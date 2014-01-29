@@ -174,6 +174,13 @@ define(["esri/map",
 					if (!map.firstLoad){
 						map.firstLoad = true;
 						setAccordionContentHeight();
+						var layers = [];
+						dojo.forEach(app.maps,function(map){
+							var lyr = getLayerByName(map,_fadeLayer,true,false);
+							layers = layers.concat(lyr);
+						});
+
+						fadeLayers(layers);
 						if(map === app.maps[0]){
 							appReady();
 						}
@@ -326,7 +333,7 @@ define(["esri/map",
 					_fadeLayer = "2000"
 				}
 				else if ($(this).index() === 1){
-					_fadeLayer = "shale"
+					_fadeLayer = "2010"
 				}
 				else{
 					_fadeLayer = "change"
@@ -338,9 +345,7 @@ define(["esri/map",
 				var layers = [];
 				dojo.forEach(app.maps,function(map){
 					var lyr = getLayerByName(map,_fadeLayer,true,false);
-					console.log(lyr);
-					layers.concat(lyr);
-					console.log(layers);
+					layers = layers.concat(lyr);
 				});
 
 				fadeLayers(layers);
@@ -351,7 +356,7 @@ define(["esri/map",
 		function fadeLayers(layers)
 		{
 			dojo.forEach(app.maps,function(map){
-				dojo.forEach(getLayerByName(map,"Smithsonian",true,false),function(lyr){
+				dojo.forEach(getLayerByName(map,"commute",true,false),function(lyr){
 
 					lyr.fading = false;
 					if ($.inArray(lyr,layers) !== -1) {
