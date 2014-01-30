@@ -73,6 +73,10 @@
 	overflow: auto;
 }
 
+.accordion-content img{
+	max-width: 200px;
+}
+
 #time-pane{
 	background: #888;
 	width: 100%;
