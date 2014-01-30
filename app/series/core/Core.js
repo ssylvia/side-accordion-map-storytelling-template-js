@@ -336,7 +336,7 @@ define(["esri/map",
 					_fadeLayer = "2010"
 				}
 				else{
-					_fadeLayer = "change"
+					_fadeLayer = "delta"
 				}
 				$("#item-runner").animate({
 					"left": pos
