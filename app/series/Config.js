@@ -7,7 +7,17 @@ define([],
 			//The web map id
 			webmaps: [
 			{
+				id: "4a7a786fbabd4da78f29e58f56fc52f1",
+				title: "",
+				// If your map has time properties, choose to show a single time instance instead of the time interval saved with the web map.
+				showSingleTimeInstance: false
+			},{
 				id: "19cfb0962b804986839d030463f45a75",
+				title: "",
+				// If your map has time properties, choose to show a single time instance instead of the time interval saved with the web map.
+				showSingleTimeInstance: false
+			},{
+				id: "4304dffaff854926903e30f14d53fe94",
 				title: "",
 				// If your map has time properties, choose to show a single time instance instead of the time interval saved with the web map.
 				showSingleTimeInstance: false
@@ -19,12 +29,6 @@ define([],
 			},
 			{
 				id: "aefed8ea77fd48da85b7c8964e435c3a",
-				title: "",
-				// If your map has time properties, choose to show a single time instance instead of the time interval saved with the web map.
-				showSingleTimeInstance: false
-			},
-			{
-				id: "4a7a786fbabd4da78f29e58f56fc52f1",
 				title: "",
 				// If your map has time properties, choose to show a single time instance instead of the time interval saved with the web map.
 				showSingleTimeInstance: false
