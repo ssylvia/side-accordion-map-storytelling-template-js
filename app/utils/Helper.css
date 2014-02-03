@@ -168,7 +168,7 @@ li{
 
 #legend-wrapper{
 	position: absolute;
-	width: 300px;
+	width: 350px;
 	top: 0;
 	right: 25px;
 	z-index: 3;
@@ -187,6 +187,10 @@ li{
 	border-right: 2px solid #888;
 	border-bottom: 2px solid #888;
 	border-left: 2px solid #888;
+}
+
+#legend-pane td{
+	vertical-align: middle;
 }
 
 .legend{
