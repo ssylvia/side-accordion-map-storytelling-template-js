@@ -15,9 +15,14 @@
 	overflow: auto;
 }
 
-.accordion-header, .accordion-content{
+.accordion-header{
 	position: relative;
-	padding: 15px 25px;
+	padding: 5px 25px;
+}
+
+.accordion-content{
+	position: relative;
+	padding: 0 25px 5px;
 }
 
 .accordion-header{
@@ -40,7 +45,7 @@
 
 .accordion-header-arrow{
 	position: absolute;
-	top: 30px;
+	top: 24px;
 	left: 0;
 	width: 0; 
 	height: 0; 
