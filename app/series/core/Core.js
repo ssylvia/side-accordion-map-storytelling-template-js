@@ -358,10 +358,10 @@ define(["esri/map",
 					_fadeLayer = "2000"
 				}
 				else if ($(this).index() === 1){
-					_fadeLayer = "2010"
+					_fadeLayer = "2012"
 				}
 				else{
-					_fadeLayer = "delta"
+					_fadeLayer = "change"
 				}
 				$("#item-runner").animate({
 					"left": pos
