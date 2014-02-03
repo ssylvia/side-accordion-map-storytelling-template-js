@@ -397,7 +397,7 @@ define(["esri/map",
 				height += $(this).outerHeight();
 			});
 
-			if (compareHeight - height - 1 < 200){
+			if (compareHeight - height - 1 < 100){
 				$(".accordion-content").css("height","auto");
 			}
 			else{
