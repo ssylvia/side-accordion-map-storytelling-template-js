@@ -7,7 +7,25 @@ define([],
 			//The web map id
 			webmaps: [
 			{
-				id: "48a2ac96b4e14e6d8b47569b75c26d77",
+				id: "d6a9d467ec4140dca4c3203d03e5f9d9",
+				title: "",
+				// If your map has time properties, choose to show a single time instance instead of the time interval saved with the web map.
+				showSingleTimeInstance: false
+			},
+			{
+				id: "0f6ff241fc26485bbe734eb53356884d",
+				title: "",
+				// If your map has time properties, choose to show a single time instance instead of the time interval saved with the web map.
+				showSingleTimeInstance: false
+			},
+			{
+				id: "85c730d492584478b889e08eb72d8bf4",
+				title: "",
+				// If your map has time properties, choose to show a single time instance instead of the time interval saved with the web map.
+				showSingleTimeInstance: false
+			},
+			{
+				id: "30c4ea29b6b64edbaa154f9597094043",
 				title: "",
 				// If your map has time properties, choose to show a single time instance instead of the time interval saved with the web map.
 				showSingleTimeInstance: false
@@ -38,7 +56,7 @@ define([],
 			//Sync maps scale and location
 			syncMaps: true,
 			//Display geocoder search widget
-			geocoderWidget: false,
+			geocoderWidget: true,
 			// Specify a proxy for custom deployment
 			proxyurl: "",
 			//specify the url to a geometry service

@@ -40,7 +40,7 @@ define(["esri/map",
 			$(".loader").fadeIn();
 		});
 
-		var _fadeLayer = "2000";
+		var _fadeLayer = "less_than_15";
 		var _popupVisible = false;
 		var _popupLocation = undefined;
 		var _popupFeature = undefined;
@@ -181,13 +181,7 @@ define(["esri/map",
 					if (!map.firstLoad){
 						map.firstLoad = true;
 						setAccordionContentHeight();
-						var layers = [];
-						dojo.forEach(app.maps,function(map){
-							var lyr = getLayerByName(map,_fadeLayer,true,false);
-							layers = layers.concat(lyr);
-						});
 
-						fadeLayers(layers);
 						if(map === app.maps[0]){
 							appReady();
 						}
@@ -290,6 +284,12 @@ define(["esri/map",
 
 		function appReady()
 		{
+
+			var layers = [];
+			var lyr = getLayerByName(app.maps[0],_fadeLayer,true,false);
+			layers = layers.concat(lyr);
+			fadeLayers(layers);
+
 			//Show Map
 			changeSelection(0)
 
@@ -352,26 +352,27 @@ define(["esri/map",
 			$(".item-selector").click(function(){
 				var pos = $(this).position().left;
 				if($(this).index() > 0){
-					pos = pos + 40;
+					pos = pos + 20;
 				}
 				if($(this).index() === 0){
-					_fadeLayer = "2000"
+					_fadeLayer = "less_than_15"
 				}
 				else if ($(this).index() === 1){
-					_fadeLayer = "2012"
+					_fadeLayer = "less_than_30"
+				}
+				else if ($(this).index() === 2){
+					_fadeLayer = "less_than_45"
 				}
 				else{
-					_fadeLayer = "change"
+					_fadeLayer = "greater_than_45"
 				}
 				$("#item-runner").animate({
 					"left": pos
 				},200);
 
 				var layers = [];
-				dojo.forEach(app.maps,function(map){
-					var lyr = getLayerByName(map,_fadeLayer,true,false);
-					layers = layers.concat(lyr);
-				});
+				var lyr = getLayerByName(app.maps[0],_fadeLayer,true,false);
+				layers = layers.concat(lyr);
 
 				fadeLayers(layers);
 
@@ -382,7 +383,8 @@ define(["esri/map",
 
 		function fadeLayers(layers)
 		{
-			dojo.forEach(app.maps,function(map){
+			if ($("#application-window").width() > 780){	
+				var map = app.maps[0];
 				dojo.forEach(getLayerByName(map,"commute",true,false),function(lyr){
 
 					lyr.fading = false;
@@ -400,7 +402,7 @@ define(["esri/map",
 					}
 
 				});
-			});
+			}
 		}
 
 		function fadeLayerIn(mapVariable,layer)
@@ -523,6 +525,13 @@ define(["esri/map",
 				$(".accordion-header.active").removeClass("active").next().slideUp(speed);
 				$(".accordion-header").eq(index).addClass("active").next().slideDown(speed);
 				selectMap(index,speed);
+			}
+
+			if(index === 0){
+				$("#content-selector").show();
+			}
+			else{
+				$("#content-selector").hide();
 			}
 
 			$(".legend").hide();
