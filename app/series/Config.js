@@ -13,7 +13,7 @@ define([],
 				showSingleTimeInstance: false
 			},
 			{
-				id: "0f6ff241fc26485bbe734eb53356884d",
+				id: "0085003a7b924b119ed5bf8443d5eb63",
 				title: "",
 				// If your map has time properties, choose to show a single time instance instead of the time interval saved with the web map.
 				showSingleTimeInstance: false
@@ -48,9 +48,9 @@ define([],
 			//	}
 			],
 			//Enter a title, if no title is specified, the first webmap's title is used.
-			title: "The morning grind: How long does it take to get from here to there",
+			title: "The Great American Commute: How Do We Get to Work, and How Long Does It Take?",
 			//Enter a subtitle, if no subtitle is specified, the first webmap's subtitle is used.
-			subtitle: "Explore commute times fro various type of transportation and how they have changed since 2000.",
+			subtitle: "According to the U.S. Census Bureau's American Community Survey, the average American commute to work was just over 25 and a half minutes in 2012. The vast majority of us drive.",
 			// If false, each tab will have a number on it. If true, the first tab will not have a number and the second tab will start counting at 1.
 			startCountOnSecondTab: false,
 			//Sync maps scale and location

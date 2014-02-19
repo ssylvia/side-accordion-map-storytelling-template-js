@@ -6,7 +6,8 @@ define(["esri/map",
 		"storymaps/utils/Helper",
 		"storymaps/ui/TimeSlider",
 		"esri/tasks/query",
-		"esri/tasks/QueryTask"],
+		"esri/tasks/QueryTask",
+		"dojo/_base/sniff"],
 	function(
 		Map,
 		Utils,
@@ -40,10 +41,11 @@ define(["esri/map",
 			$(".loader").fadeIn();
 		});
 
-		var _fadeLayer = "less_than_15";
+		var _fadeLayer = "greater_than_45";
 		var _popupVisible = false;
 		var _popupLocation = undefined;
 		var _popupFeature = undefined;
+		var _fromGeocoder = false;
 
 		function init()
 		{
@@ -135,7 +137,9 @@ define(["esri/map",
 			var mapDeferred = esri.arcgis.utils.createMap(configOptions.webmaps[app.maps.length].id,"map"+app.maps.length,{
 				mapOptions: {
 					extent: getExtent(),
-					infoWindow: popup
+					infoWindow: popup,
+					maxZoom: 9,
+					minZoom: 4
 				},
 				bingMapsKey: configOptions.bingmapskey
 			});
@@ -192,9 +196,18 @@ define(["esri/map",
 					if (configOptions.syncMaps && map === app.currentMap){
 						Helper.syncMaps(app.maps,app.currentMap,map.extent);
 					}
+					if (_fromGeocoder){
+						_fromGeocoder = false;
+
+						_popupVisible = true;
+						syncPopup();
+					}
 				});
 
 				dojo.connect(map.infoWindow,"onShow",function(){
+					// if (!map.infoWindow.features){
+					// 	map.infoWindow.hide();
+					// }
 					_popupVisible = true;
 					_popupLocation = map.infoWindow._location;
 					var mapIndex = $.inArray(map,app.maps);
@@ -219,6 +232,15 @@ define(["esri/map",
 					}
 				});
 
+				dojo.connect(map.infoWindow,"onSelectionChange",function(){
+					if (!map.infoWindow.getSelectedFeature()){
+						map.infoWindow.hide();
+					}
+					else{
+						map.infoWindow.show(_popupLocation);
+					}
+				});
+
 				dojo.connect(map.infoWindow,"onHide",function(){
 					_popupVisible = false;
 					$(".mobile-popup-content").hide();
@@ -235,6 +257,7 @@ define(["esri/map",
 							}
 						});
 						map.infoWindow.setFeatures([features[0]]);
+						// map.infoWindow.show(map.infoWindow._location);
 					}
 					else{
 						_popupFeature = map.infoWindow.getSelectedFeature();
@@ -264,9 +287,18 @@ define(["esri/map",
 			if(configOptions.geocoderWidget){
 				$("#" + map.container.id).append('<div id="'+map.container.id+'geocoder" class="geocoderWidget"></div>');
 				var geocoder = new esri.dijit.Geocoder({
-					map: map
+					map: map,
+					autoComplete: true,
+					maxLocations: 1,
+					searchExtent: map._mapParams.extent
 				},map.container.id+'geocoder');
 				geocoder.startup();
+
+				dojo.connect(geocoder,"onSelect",function(results){
+					_fromGeocoder = true;
+
+					_popupLocation = results.extent.getCenter();
+				});
 			}
 
 			//ADD LEGEND
@@ -289,6 +321,14 @@ define(["esri/map",
 			var lyr = getLayerByName(app.maps[0],_fadeLayer,true,false);
 			layers = layers.concat(lyr);
 			fadeLayers(layers);
+
+			$("#item-runner").animate({
+				"left": $(".selector-background").last().position().left + 20
+			},{
+				complete: function(){
+					$(".selector-background").addClass("active");
+				}
+			},0);
 
 			//Show Map
 			changeSelection(0)
@@ -349,10 +389,24 @@ define(["esri/map",
 				$("#legend-pane").stop(true,true).slideUp();
 			});
 
-			$(".item-selector").click(function(){
+			if(Has("ie") < 11){
+				$(".selector-text").mouseover(function(){
+					$(".selector-background").eq($(this).index() - 2).addClass("hover");
+				});
+				$(".selector-text").mouseout(function(){
+					$(".selector-background").eq($(this).index() - 2).removeClass("hover");
+				});
+				$(".selector-text").click(function(){
+					$(".selector-background").eq($(this).index() - 2).trigger("click");
+				});
+			}
+
+			$(".selector-background").click(function(){
 				var pos = $(this).position().left;
+				var selection = $(this).index();
 				if($(this).index() > 0){
 					pos = pos + 20;
+					$("#").addClass("active");
 				}
 				if($(this).index() === 0){
 					_fadeLayer = "less_than_15"
@@ -368,7 +422,13 @@ define(["esri/map",
 				}
 				$("#item-runner").animate({
 					"left": pos
-				},200);
+				},{
+					complete: function(){
+						$(".selector-background").removeClass("active");
+						$(".selector-background:lt(" + selection + ")").addClass("active");
+						$(".selector-background:eq(" + selection + ")").addClass("active");
+					}
+				},100);
 
 				var layers = [];
 				var lyr = getLayerByName(app.maps[0],_fadeLayer,true,false);
@@ -482,21 +542,36 @@ define(["esri/map",
 		function syncPopup()
 		{
 			if (_popupVisible){
-				var lyr = getLayerByName(app.currentMap,_fadeLayer,true,false);
+				var lyr;
+				var gLayer;
+				if(app.currentMap === app.maps[0]){
+					lyr = getLayerByName(app.currentMap,_fadeLayer,true,false);
+					gLayer = getLayerByName(app.currentMap,_fadeLayer,false,true)[0];
+				}
+				else{
+					lyr = getLayerByName(app.currentMap,"commute",true,false);
+					gLayer = getLayerByName(app.currentMap,"commute",false,true)[0];
+				}
 				var url = lyr[0].url + "/0";
-				var gLayer = getLayerByName(app.currentMap,_fadeLayer,false,true)[0];
 				var popupTemplate = gLayer.infoTemplate;
 				
 				var query = new Query();
 				query.outFields = ["*"];
+				query.returnGeometry = true;
 				query.geometry = _popupLocation;
 				query.where = "1=1";
 
 				var queryTask = new QueryTask(url);
 				queryTask.execute(query,function(results){
-					ftr = results.features[0];
-					ftr.setInfoTemplate(popupTemplate);
-					app.currentMap.infoWindow.setFeatures([ftr]);
+					if (results.features.length > 0){
+						ftr = results.features[0];
+						ftr.setInfoTemplate(popupTemplate);
+						app.currentMap.infoWindow.setFeatures([ftr]);
+						app.currentMap.infoWindow.show(_popupLocation);
+					}
+					else{
+						app.currentMap.infoWindow.hide();
+					}
 				});
 			}
 			else{
