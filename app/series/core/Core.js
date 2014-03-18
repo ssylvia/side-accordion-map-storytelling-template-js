@@ -139,7 +139,7 @@ define(["esri/map",
 					extent: getExtent(),
 					infoWindow: popup,
 					maxZoom: 9,
-					minZoom: 4
+					minZoom: 2
 				},
 				bingMapsKey: configOptions.bingmapskey
 			});
