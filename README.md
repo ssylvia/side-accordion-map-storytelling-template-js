@@ -48,9 +48,10 @@ Now let's configure the application to use a different ArcGIS Online group, titl
 
 ## Resources
 
-* [ArcGIS for JavaScript API Resource Center](http://help.arcgis.com/en/webapi/javascript/arcgis/index.html)
-* [ArcGIS Blog](http://blogs.esri.com/esri/arcgis/)
-* [Esri Storytelling with Maps](http://storymaps.esri.com)
+- [Vist the story maps forum](http://forums.arcgis.com/forums/264-Story-Maps)
+- [Story Maps Website](http://storymaps.arcgis.com/)
+- [@EsriStoryMaps](http://twitter.com/EsriStoryMaps)
+- [Story Maps Blog](http://blogs.esri.com/esri/arcgis/category/story-maps/)
 
 ## Issues
 
