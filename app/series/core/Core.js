@@ -253,7 +253,7 @@ define(["esri/map",
 				legend.startup();
 			}
 			else{
-				$(".legend").eq(index).html("This map has no layers to show in the legend.");
+				$(".legend").eq(index).data('hide-legend', true);
 			}
 		}
 
@@ -352,7 +352,7 @@ define(["esri/map",
 				selectMap(index,speed);
 			}
 
-			if(app.currentMap.legendVisible){
+			if(app.currentMap.legendVisible && !$(".legend").eq(index).data('hide-legend')){
 				$("#legend-wrapper").show();
 			}
 			else{
