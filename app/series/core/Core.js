@@ -353,10 +353,10 @@ define(["esri/map",
 			}
 
 			if(app.currentMap.legendVisible && !$(".legend").eq(index).data('hide-legend')){
-				$("#legend-wrapper").show();
+				$("#legend-wrapper, #mobile-nav .right-nav").show();
 			}
 			else{
-				$("#legend-wrapper").hide();
+				$("#legend-wrapper, #mobile-nav .right-nav").hide();
 			}
 			if(app.currentMap.openLegendOnChange){
 				$("#legend-pane").slideDown({

@@ -146,6 +146,7 @@ li{
 }
 
 #mobile-nav{
+	position: relative;
 	background-color: #888;
 	color: #dadada;
 	height: 14px;
@@ -168,6 +169,7 @@ li{
 }
 
 .right-nav{
+	top: .5em;
 	right: .5em;
 }
 
