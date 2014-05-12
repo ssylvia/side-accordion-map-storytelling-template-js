@@ -60,7 +60,11 @@ define(["esri/map",
 			var urlObject = esri.urlToObject(document.location.href);
 			urlObject.query = urlObject.query || {};
 
-			if ($("#application-window").width() > 780 && urlObject.query.embed || urlObject.query.embed === "") {
+			if(urlObject.query.embed || urlObject.query.embed === ""){
+				app.embedded = true;
+			}
+
+			if ($("#application-window").width() > 780 && app.embedded) {
 				$("#banner").hide();
 			}
 
@@ -273,7 +277,9 @@ define(["esri/map",
 
 			$("#mobile-header").html(app.currentMap.itemData.title);
 
-			$("#header-text").slideDown();
+			if(!app.embedded){
+				$("#header-text").slideDown();
+			}
 
 			//Set state of accordion
 			$(".accordion-content").first().slideDown();
