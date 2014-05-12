@@ -449,7 +449,7 @@ define(["esri/map",
 				$("#header-text").removeClass("region-center").css({
 					"height": "auto",
 					"width": "auto"
-				}).hide();
+				});
 				$("#map-pane").prepend($("#side-pane"));
 			}
 			else{
