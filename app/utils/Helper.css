@@ -231,6 +231,10 @@ li{
 		overflow: hidden;
 		text-overflow: ellipsis;
 	}
+
+	#close-mobile-legend{
+		display: none !important;
+	}
 }
 
 @media all and (max-width: 780px) {
