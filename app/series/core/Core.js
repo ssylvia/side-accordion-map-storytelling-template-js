@@ -368,6 +368,14 @@ define(["esri/map",
 				$("#legend-pane").slideDown({
 					complete: function(){
 						setLegendToggle();
+						if($("#application-window").width() <= 780){
+							if($("#legend-pane").is(":visible")){
+								$("#close-mobile-legend").show();
+							}
+							else{
+								$("#close-mobile-legend").hide();
+							}
+						}
 					}
 				});
 			}
