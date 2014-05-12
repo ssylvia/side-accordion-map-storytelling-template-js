@@ -214,6 +214,12 @@ define(["esri/map",
 					}
 				});
 
+				dojo.connect(map.infoWindow,'onSetFeatures',function(){
+					if(map.infoWindow.features === null){
+						map.infoWindow.hide();
+					}
+				})
+
 				dojo.connect(map.infoWindow,"onHide",function(){
 					$(".mobile-popup-content").hide();
 					$("mobile-popup").hide();
