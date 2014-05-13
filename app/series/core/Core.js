@@ -218,7 +218,7 @@ define(["esri/map",
 					if(map.infoWindow.features === null){
 						map.infoWindow.hide();
 					}
-				})
+				});
 
 				dojo.connect(map.infoWindow,"onHide",function(){
 					$(".mobile-popup-content").hide();
